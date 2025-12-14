@@ -48,7 +48,7 @@ trait ApiResponse
         return $this->success(null, $message, $code, $success);
     }
 
-    protected function error(?string $message = null, int $code, $errors = null): JsonResponse
+    protected function error(?string $message = null, int $code = Response::HTTP_BAD_REQUEST, $errors = null): JsonResponse
     {
         return response()->json([
             'success' => false,
