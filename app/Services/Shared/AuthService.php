@@ -22,6 +22,7 @@ class AuthService
             'phone' => $request->phone ?? null,
             'email' => $request->email ?? null,
             'password' => Hash::make($request->password),
+            'date_of_birth' => $request->date_of_birth ?? null,
             'role' => $request->role,
             'email_verification_code' => $code,
         ]);
