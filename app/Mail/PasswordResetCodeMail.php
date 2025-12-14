@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PasswordResetCodeMail extends Mailable implements ShouldQueue
+class PasswordResetCodeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
