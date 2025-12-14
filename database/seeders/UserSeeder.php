@@ -13,8 +13,8 @@ class UserSeeder extends Seeder
     {
         User::create([
             'phone' => '',
-            'username' => 'admin.test',
-            'password' => Hash::make('password'),
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('STARRS@2025'),
             'first_name' => 'Admin',
             'last_name' => 'System',
             'date_of_birth' => Carbon::parse('1985-01-01'),
@@ -24,8 +24,8 @@ class UserSeeder extends Seeder
 
         User::create([
             'phone' => '0999654321',
-            'username' => 'host.test',
-            'password' => Hash::make('password'),
+            'email' => 'host@gmail.com',
+            'password' => Hash::make('STARRS@2025'),
             'first_name' => 'Anas',
             'last_name' => 'Almbark',
             'date_of_birth' => Carbon::parse('1990-05-15'),
@@ -35,8 +35,8 @@ class UserSeeder extends Seeder
 
         User::create([
             'phone' => '0998888888',
-            'username' => 'tenant.test',
-            'password' => Hash::make('password'),
+            'email' => 'tenant@gmail.com',
+            'password' => Hash::make('STARRS@2025'),
             'first_name' => 'Shimaa',
             'last_name' => 'Othman',
             'date_of_birth' => Carbon::parse('1995-10-20'),
