@@ -12,6 +12,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\VerifyEmailRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\ResendVerificationCodeRequest;
+use Illuminate\Container\Attributes\Log;
 
 class AuthController extends Controller
 {
@@ -28,6 +29,7 @@ class AuthController extends Controller
     {
         try {
             $this->authService->register($request);
+            $name = "Anas";
             return $this->successMessage("User created successfully. Please check your email for verification code.", 201);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
