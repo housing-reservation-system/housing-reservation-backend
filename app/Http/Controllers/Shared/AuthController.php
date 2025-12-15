@@ -40,7 +40,7 @@ class AuthController extends Controller
     {
         try {
             $result = $this->authService->login($request);
-
+            $test = "test";
             $data = (new UserResource($result['user']))->toArray($request);
 
             return $this->success([
