@@ -29,6 +29,7 @@ class AuthController extends Controller
     {
         try {
             $this->authService->register($request);
+            $name = "Anas";
             return $this->successMessage("User created successfully. Please check your email for verification code.", 201);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
