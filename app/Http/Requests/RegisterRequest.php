@@ -24,7 +24,6 @@ class RegisterRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
             'date_of_birth' => 'nullable|date',
-            'role' => 'required|in:Admin,Tenant,Host'
         ];
     }
 

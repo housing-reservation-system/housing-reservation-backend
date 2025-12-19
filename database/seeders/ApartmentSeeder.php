@@ -21,24 +21,40 @@ class ApartmentSeeder extends Seeder
         Apartment::create([
             'user_id' => $host->id, 'location_id' => $locations[0]->id,
             'title' => 'Luxury Flat - Damascus Mezzeh', 'description' => 'Brand new flat with great view.',
+            'rooms' => 2,
+            'area' => 120,
+            'rent_price' => 1000,
+            'rent_period' => 'monthly',
             'is_active' => true,
             'amenities' => json_encode(['wifi' => true, 'parking' => true])
         ]);
         Apartment::create([
             'user_id' => $host->id, 'location_id' => $locations[1]->id,
             'title' => 'Cozy Apartment - Al-Malki', 'description' => 'Perfect for solo travelers.',
+            'rooms' => 2,
+            'area' => 120,
+            'rent_price' => 1000,
+            'rent_period' => 'monthly',
             'is_active' => true,
             'amenities' => json_encode(['kitchen' => true, 'tv' => true])
         ]);
         Apartment::create([
             'user_id' => $host->id, 'location_id' => $locations[2]->id,
             'title' => 'Aleppo Central Stay', 'description' => 'Fully furnished and quiet.',
+            'rooms' => 2,
+            'area' => 120,
+            'rent_price' => 1000,
+            'rent_period' => 'monthly',
             'is_active' => true,
             'amenities' => json_encode(['ac' => true, 'heater' => true])
         ]);
         Apartment::create([
             'user_id' => $host->id, 'location_id' => $locations[3]->id,
             'title' => 'Latakia Seaside Home', 'description' => 'Enjoy the sunset view.',
+            'rooms' => 2,
+            'area' => 120,
+            'rent_price' => 1000,
+            'rent_period' => 'monthly',
             'is_active' => false,   
             'amenities' => json_encode(['balcony' => true, 'pool' => false])
         ]);

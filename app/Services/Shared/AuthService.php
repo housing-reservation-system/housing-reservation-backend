@@ -2,6 +2,7 @@
 
 namespace App\Services\Shared;
 
+use App\Enums\UserRole;
 use App\Models\User;
 use App\Mail\VerificationCodeMail;
 use Illuminate\Http\Request;
@@ -12,18 +13,17 @@ use Illuminate\Support\Facades\Mail;
 
 class AuthService
 {
-    public function register(Request $request): User
+    public function register(Request $request, UserRole $role): User
     {
         $code = $this->generateVerificationCode();
 
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'phone' => $request->phone ?? null,
-            'email' => $request->email ?? null,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
-            'date_of_birth' => $request->date_of_birth ?? null,
-            'role' => $request->role,
+            'date_of_birth' => $request->date_of_birth,
+            'role' => $role->value,
             'email_verification_code' => $code,
         ]);
 

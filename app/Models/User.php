@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,7 +23,6 @@ class User extends Authenticatable implements JWTSubject, HasMedia
         'role',
         'status',
         'gender',
-        'phone_verified_at',
         'email',
         'email_verification_code',
         'email_verified_at',
@@ -38,6 +38,8 @@ class User extends Authenticatable implements JWTSubject, HasMedia
         return [
             'password' => 'hashed',
             'email_verification_code_expires_at' => 'datetime',
+            'role' => \App\Enums\UserRole::class,
+            'status' => \App\Enums\StatusType::class,
         ];
     }
 
@@ -50,4 +52,17 @@ class User extends Authenticatable implements JWTSubject, HasMedia
     {
         return [];
     }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('photo')->useDisk('cloudinary');
+        $this->addMediaCollection('id_back')->useDisk('cloudinary');
+        $this->addMediaCollection('id_front')->useDisk('cloudinary');
+    }
+
+    public function getNameAttribute(): string
+{
+    return trim($this->first_name . ' ' . $this->last_name) ?: $this->email;
+}
+
 }

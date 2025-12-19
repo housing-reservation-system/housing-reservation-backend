@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Shared;
 
+use App\Enums\UserRole;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -25,11 +26,20 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
-    public function register(RegisterRequest $request)
+    public function registerTenant(RegisterRequest $request)
     {
         try {
-            $this->authService->register($request);
-            $name = "Anas";
+            $this->authService->register($request, UserRole::TENANT);
+            return $this->successMessage("User created successfully. Please check your email for verification code.", 201);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function registerHost(RegisterRequest $request)
+    {
+        try {
+            $this->authService->register($request, UserRole::HOST);
             return $this->successMessage("User created successfully. Please check your email for verification code.", 201);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -40,7 +50,6 @@ class AuthController extends Controller
     {
         try {
             $result = $this->authService->login($request);
-            $test = "test";
             $data = (new UserResource($result['user']))->toArray($request);
 
             return $this->success([

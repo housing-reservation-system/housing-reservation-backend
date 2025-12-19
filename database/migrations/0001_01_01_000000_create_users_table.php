@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('password');
             $table->date('date_of_birth')->nullable();
             $table->enum('role', ['Admin', 'Tenant', 'Host']);
-            $table->enum('status', ['New', 'Pending', 'Approved', 'Suspended', 'Deleted']);
+            $table->enum('status', ['New', 'Pending', 'Approved', 'Rejected', 'Suspended', 'Deleted'])->default('New');
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->string('email_verification_code')->nullable();
             $table->timestamp('email_verified_at')->nullable();
