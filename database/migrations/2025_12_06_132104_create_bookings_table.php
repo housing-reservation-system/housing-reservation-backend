@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->decimal('total_price', 10, 2);
-            $table->enum('status', ['Pending', 'Approved', 'Rejected', 'Cancelled'])->default('Pending');
+            $table->enum('status', ['Pending', 'Approved', 'Rejected', 'Cancelled', 'Ongoing', 'Completed'])->default('Pending');
             $table->boolean('is_modified')->default(false);
             $table->text('cancellation_reason')->nullable();
             $table->timestamps();

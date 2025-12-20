@@ -65,4 +65,9 @@ class User extends Authenticatable implements JWTSubject, HasMedia
     return trim($this->first_name . ' ' . $this->last_name) ?: $this->email;
 }
 
+public function bookings()
+{
+    return $this->hasMany(Booking::class);
+}
+
 }

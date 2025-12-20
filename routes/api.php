@@ -5,3 +5,5 @@ include __DIR__ . '/Api/Host/apartments.php';
 include __DIR__ . '/Api/Shared/accountVerification.php';
 include __DIR__ . '/Api/Shared/profile.php';
 include __DIR__ . '/Api/Shared/paymentMethods.php';
+include __DIR__ . '/Api/Tenant/bookings.php';
+include __DIR__ . '/Api/Host/bookings.php';

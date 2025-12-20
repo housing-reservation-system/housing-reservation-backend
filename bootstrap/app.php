@@ -19,6 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'approved' => StatusMiddleware::class,
         ]);
     })
+    ->withSchedule(function (\Illuminate\Console\Scheduling\Schedule $schedule) {
+        $schedule->command('bookings:mark-completed')->daily();
+    })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

@@ -52,4 +52,9 @@ class Apartment extends Model implements HasMedia
             $q->selectRaw('*, ST_X(point) as longitude, ST_Y(point) as latitude');
         }]);
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }
