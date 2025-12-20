@@ -64,21 +64,22 @@ class ApartmentService
     public function updateApartment(Apartment $apartment, array $data)
     {
         return DB::transaction(function () use ($apartment, $data) {
-            $apartment->location->update([
-                'point' => DB::raw("ST_GeomFromText('POINT({$data['longitude']} {$data['latitude']})')"),
-                'province' => $data['province'],
-                'city' => $data['city'],
-                'street' => $data['street'],
-            ]);
-
+            if (isset($data['latitude'], $data['longitude']) && $apartment->location){
+                $apartment->location->update([
+                    'point' => DB::raw("ST_GeomFromText('POINT({$data['longitude']} {$data['latitude']})')"),
+                    'province' => $data['province'],
+                    'city' => $data['city'],
+                    'street' => $data['street'],
+                ]);
+            }
             $apartment->update([
-                'title' => $data['title'],
-                'description' => $data['description'] ?? null,
-                'rooms' => $data['rooms'],
-                'area' => $data['area'],
-                'rent_price' => $data['rent_price'],
-                'rent_period' => $data['rent_period'],
-                'amenities' => $data['amenities'] ?? [],
+                'title' => $data['title'] ?? $apartment->title,
+                'description' => $data['description'] ?? $apartment->description,
+                'rooms' => $data['rooms'] ?? $apartment->rooms,
+                'area' => $data['area'] ?? $apartment->area,
+                'rent_price' => $data['rent_price'] ?? $apartment->rent_price,
+                'rent_period' => $data['rent_period'] ?? $apartment->rent_period,
+                'amenities' => $data['amenities'] ?? $apartment->amenities,
             ]);
 
             $apartment->load(['location' => function ($q) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Host;
 
 use App\Http\Requests\ApartmentRequest;
+use App\Http\Requests\UpdateApartmentRequest;
 use App\Http\Resources\ApartmentResource;
 use App\Models\Apartment;
 use App\Services\ApartmentService;
@@ -11,10 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ApartmentController extends Controller
 {
-    use ApiResponse;
+    use ApiResponse,AuthorizesRequests;
 
     protected $apartmentService;
 
@@ -57,7 +59,7 @@ class ApartmentController extends Controller
 
     public function show(Apartment $apartment)
     {
-        try {
+        try {            
             $this->authorize('view', $apartment);
             
             $apartment->load(['location' => function ($q) {
@@ -75,7 +77,7 @@ class ApartmentController extends Controller
         }
     }
 
-    public function update(ApartmentRequest $request, Apartment $apartment)
+    public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
         try {
             $this->authorize('update', $apartment);

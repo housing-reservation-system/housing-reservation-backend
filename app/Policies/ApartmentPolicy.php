@@ -13,7 +13,7 @@ class ApartmentPolicy
     {
         return true;
     }
-
+    
     public function create(User $user): bool
     {
         return $user->role === UserRole::HOST;

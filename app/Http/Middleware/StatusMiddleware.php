@@ -13,7 +13,7 @@ class StatusMiddleware
     use ApiResponse;
     public function handle(Request $request, Closure $next): Response
     {
-        if (!in_array(Auth::user()->status, [StatusType::APPROVED->value])) {
+        if (!in_array(Auth::user()->status->value, [StatusType::APPROVED->value])) {
             return $this->error('Unauthorized: You do not have permission to access this resource.', Response::HTTP_FORBIDDEN);
         }
         return $next($request);

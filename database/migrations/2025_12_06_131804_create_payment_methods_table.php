@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('card_holder_name')->nullable();
             $table->date('expiry_date');
             $table->boolean('is_default')->default(false);
-            $table->string('token')->unique();
             $table->timestamps();
         });
     }

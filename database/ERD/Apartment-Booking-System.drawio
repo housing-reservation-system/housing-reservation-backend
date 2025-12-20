@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="2069" dy="1813" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="1886" dy="1706" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -873,11 +873,11 @@
         <mxCell id="WABOZlNTDiI4O71NLlFe-14" value="PaymentMethods" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;fillColor=light-dark(#FFB570,#512D2B);strokeColor=#C68D57;" parent="1" vertex="1">
           <mxGeometry x="370" y="-485" width="160" height="195" as="geometry" />
         </mxCell>
-        <mxCell id="WABOZlNTDiI4O71NLlFe-15" value="+id&lt;br&gt;+user_id&lt;br&gt;+card_brand&lt;br&gt;+last_four_digits&lt;br&gt;+card_holder_name&lt;br&gt;+expiry_date&lt;br&gt;+token&lt;br&gt;+is_default" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" parent="WABOZlNTDiI4O71NLlFe-14" vertex="1">
+        <mxCell id="WABOZlNTDiI4O71NLlFe-15" value="+id&lt;br&gt;+user_id&lt;br&gt;+card_brand&lt;br&gt;+last_four_digits&lt;br&gt;+card_holder_name&lt;br&gt;+expiry_date&lt;br&gt;+is_default" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" parent="WABOZlNTDiI4O71NLlFe-14" vertex="1">
           <mxGeometry y="50" width="160" height="145" as="geometry" />
         </mxCell>
         <mxCell id="WABOZlNTDiI4O71NLlFe-20" value="PaymentMethods" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;fillColor=#FFB570;strokeColor=#C68D57;rounded=1;" parent="1" vertex="1">
-          <mxGeometry x="800" y="-400" width="270" height="280" as="geometry" />
+          <mxGeometry x="800" y="-400" width="270" height="250" as="geometry" />
         </mxCell>
         <mxCell id="WABOZlNTDiI4O71NLlFe-21" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" parent="WABOZlNTDiI4O71NLlFe-20" vertex="1">
           <mxGeometry y="30" width="270" height="30" as="geometry" />
@@ -957,21 +957,8 @@
             <mxRectangle width="240" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WABOZlNTDiI4O71NLlFe-43" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" parent="WABOZlNTDiI4O71NLlFe-20" vertex="1">
-          <mxGeometry y="210" width="270" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="WABOZlNTDiI4O71NLlFe-44" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;fontStyle=1" parent="WABOZlNTDiI4O71NLlFe-43" vertex="1">
-          <mxGeometry width="30" height="30" as="geometry">
-            <mxRectangle width="30" height="30" as="alternateBounds" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="WABOZlNTDiI4O71NLlFe-45" value="token char(255) NOT NULL" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" parent="WABOZlNTDiI4O71NLlFe-43" vertex="1">
-          <mxGeometry x="30" width="240" height="30" as="geometry">
-            <mxRectangle width="240" height="30" as="alternateBounds" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="WABOZlNTDiI4O71NLlFe-46" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" parent="WABOZlNTDiI4O71NLlFe-20" vertex="1">
-          <mxGeometry y="240" width="270" height="30" as="geometry" />
+          <mxGeometry y="210" width="270" height="30" as="geometry" />
         </mxCell>
         <mxCell id="WABOZlNTDiI4O71NLlFe-47" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;fontStyle=1" parent="WABOZlNTDiI4O71NLlFe-46" vertex="1">
           <mxGeometry width="30" height="30" as="geometry">

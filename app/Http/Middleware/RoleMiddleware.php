@@ -14,10 +14,10 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, string $role)
     {
         $user = Auth::user();
-        if ($user->role == UserRole::ADMIN) {
+        if ($user->role == UserRole::ADMIN->value) {
             return $next($request);
         }
-        if ($user->role != $role) {
+        if ($user->role->value != $role) {
             return $this->error('Unauthorized: You do not have permission to access this resource.', Response::HTTP_FORBIDDEN);
         }
         return $next($request);

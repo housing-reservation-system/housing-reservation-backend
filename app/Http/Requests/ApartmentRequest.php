@@ -15,8 +15,6 @@ class ApartmentRequest extends FormRequest
 
     public function rules(): array
     {
-        $isUpdate = $this->isMethod('PUT') || $this->isMethod('PATCH');
-
         return [
             'title' => "required|string|max:255",
             'description' => "required|string|max:1000",
@@ -31,7 +29,7 @@ class ApartmentRequest extends FormRequest
             'province' => "required|string|max:255",
             'city' => "required|string|max:255",
             'street' => "required|string|max:255",
-            'main_image' => [$isUpdate ? 'nullable' : 'required', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
+            'main_image' => ['required', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
             'images' => "nullable|array|max:10",
             'images.*' => "image|mimes:jpeg,png,jpg,svg|max:2048",
         ];

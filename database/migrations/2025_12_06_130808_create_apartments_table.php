@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('location_id')->constrained('locations')->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
-             $table->integer('rooms');
+            $table->integer('rooms');
             $table->double('area');
             $table->double('rent_price');
             $table->enum('rent_period', ['monthly', 'yearly']);
