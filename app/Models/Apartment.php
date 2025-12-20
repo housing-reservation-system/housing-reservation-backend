@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -40,7 +40,7 @@ class Apartment extends Model implements HasMedia
     {
         return $this->belongsTo(Location::class);
     }
-    
+
     public function host()
     {
         return $this->belongsTo(User::class, 'user_id');
