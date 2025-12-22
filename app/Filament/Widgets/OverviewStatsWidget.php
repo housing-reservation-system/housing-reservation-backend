@@ -27,11 +27,11 @@ class OverviewStatsWidget extends BaseWidget
                 ->descriptionIcon('heroicon-m-banknotes')
                 ->chart([1000, 5000, 3000, 8000, 6000, 12000, 10000])
                 ->color('success'),
-            Stat::make('Average Rating', number_format(\App\Models\Review::avg('rating'), 1))
-                ->description('User satisfaction')
-                ->descriptionIcon('heroicon-m-star')
-                ->chart([3.5, 4.2, 4.0, 4.5, 4.3, 4.8, 4.6])
-                ->color('warning'),
+            // Stat::make('Average Rating', number_format(\App\Models\Review::avg('rating'), 1))
+            //     ->description('User satisfaction')
+            //     ->descriptionIcon('heroicon-m-star')
+            //     ->chart([3.5, 4.2, 4.0, 4.5, 4.3, 4.8, 4.6])
+            //     ->color('warning'),
         ];
     }
 }
