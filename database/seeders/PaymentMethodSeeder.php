@@ -19,17 +19,17 @@ class PaymentMethodSeeder extends Seeder
         }
 
         PaymentMethod::create([
-            'user_id' => $tenant->id, 'method_type' => 'Credit_Card', 'card_brand' => 'VISA',
+            'user_id' => $tenant->id,  'card_brand' => 'VISA',
             'last_four_digits' => '1234', 'card_holder_name' => 'Anas Almbark',
             'expiry_date' => Carbon::parse('2028-10-01'), 'is_default' => true,
-            'token' => Hash::make('card_visa_1234_'.time())
+            //'token' => Hash::make('card_visa_1234_'.time())
         ]);
 
         PaymentMethod::create([
-            'user_id' => $tenant->id, 'method_type' => 'Credit_Card', 'card_brand' => 'MASTERCARD',
+            'user_id' => $tenant->id, /*'method_type' => 'Credit_Card',*/ 'card_brand' => 'MASTERCARD',
             'last_four_digits' => '9876', 'card_holder_name' => 'Anas Almbark',
             'expiry_date' => Carbon::parse('2026-05-01'), 'is_default' => false,
-            'token' => Hash::make('card_master_9876_'.time())
+           // 'token' => Hash::make('card_master_9876_'.time())
         ]);
     }
 }
