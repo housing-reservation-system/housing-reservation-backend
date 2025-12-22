@@ -5,8 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ApartmentResource extends JsonResource
-{
+class ApartmentResource extends JsonResource{
     public function toArray(Request $request): array
     {
         $mainImage = $this->getMedia('apartments')->where('custom_properties.main', true)->first();
