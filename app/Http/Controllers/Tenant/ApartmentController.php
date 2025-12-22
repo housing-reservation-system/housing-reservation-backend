@@ -49,5 +49,18 @@ class ApartmentController extends Controller
             return $this->error($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
+    public function filter(Request $request)
+{
+    try {
+        $apartments = $this->service->filter($request);
+        return $this->success(
+            ApartmentTenantListResource::collection($apartments),
+            'Apartments filtered successfully',
+            Response::HTTP_OK
+        );
+    } catch (Exception $e) {
+        return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+}
 }
 
