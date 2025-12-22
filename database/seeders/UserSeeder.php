@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             'first_name' => 'Admin',
             'last_name' => 'System',
             'date_of_birth' => Carbon::parse('1985-01-01'),
+            'email_verified_at' => Carbon::parse('2025-12-01'),
             'role' => 'Admin',
             'status' => "Approved",
         ]);
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
             'first_name' => 'Anas',
             'last_name' => 'Almbark',
             'date_of_birth' => Carbon::parse('1990-05-15'),
+            'email_verified_at' => Carbon::parse('2025-12-01'),
             'role' => 'Host',
             'status' => "Approved",
         ]);
@@ -40,6 +42,7 @@ class UserSeeder extends Seeder
             'first_name' => 'Shimaa',
             'last_name' => 'Othman',
             'date_of_birth' => Carbon::parse('1995-10-20'),
+            'email_verified_at' => Carbon::parse('2025-12-01'),
             'role' => 'Tenant',
             'status' => "Approved",
         ]);
