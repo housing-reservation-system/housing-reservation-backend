@@ -26,7 +26,7 @@ class BookingSeeder extends Seeder
 
         Booking::create([
             'user_id' => $tenant->id, 'apartment_id' => $apartment1->id,
-            'start_date' => Carbon::now()->subDays(5), 'end_date' => Carbon::now()->subDays(2), 
+            'start_date' => Carbon::now()->subDays(5), 'end_date' => Carbon::now()->subDays(2),
             'total_price' => 452,
             'payment_method_id' => $payment1->id,
             'status' => 'Approved',
@@ -37,7 +37,7 @@ class BookingSeeder extends Seeder
             'start_date' => Carbon::now()->addMonths(1), 'end_date' => Carbon::now()->addMonths(1)->addDays(5),
             'total_price' => 231,
             'payment_method_id' => $payment2->id,
-            'status' => 'Pending',
+            'status' => 'completed',
         ]);
     }
 }
