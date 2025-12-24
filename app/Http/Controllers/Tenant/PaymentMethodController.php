@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tenant;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PaymentMethodRequest;
 use App\Http\Requests\UpdatePaymentMethodRequest;
 use App\Http\Resources\PaymentMethodResource;
 use App\Models\PaymentMethod;
-use App\Services\PaymentMethodService;
+use App\Services\Tenant\PaymentMethodService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;

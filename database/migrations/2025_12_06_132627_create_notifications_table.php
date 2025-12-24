@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('message');
             $table->json('metadata')->nullable();
-            $table->enum('type', ['success', 'info', 'warning', 'error']);
+            $table->enum('type', ['success', 'info', 'warning', 'error'])->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamps();
         });

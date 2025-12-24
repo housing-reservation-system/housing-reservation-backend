@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Host;
 
 use App\Models\Apartment;
 use App\Models\Location;
@@ -64,7 +64,7 @@ class ApartmentService
     public function updateApartment(Apartment $apartment, array $data)
     {
         return DB::transaction(function () use ($apartment, $data) {
-            if (isset($data['latitude'], $data['longitude']) && $apartment->location){
+            if (isset($data['latitude'], $data['longitude']) && $apartment->location) {
                 $apartment->location->update([
                     'point' => DB::raw("ST_GeomFromText('POINT({$data['longitude']} {$data['latitude']})')"),
                     'province' => $data['province'],
@@ -95,7 +95,7 @@ class ApartmentService
         return DB::transaction(function () use ($apartment, $mainImage, $images) {
             if ($mainImage) {
                 $apartment->clearMediaCollection('apartments');
-                
+
                 $apartment->addMedia($mainImage)
                     ->withCustomProperties(['main' => true])
                     ->toMediaCollection('apartments', 'cloudinary');

@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'fcm' => [
+        'service_account' => env('FCM_SERVICE_ACCOUNT_PATH', storage_path('app/firebase/starrs.json')),
+    ],
+
 ];

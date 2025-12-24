@@ -7,7 +7,7 @@ use App\Http\Requests\Booking\StoreBookingRequest;
 use App\Http\Requests\Booking\UpdateBookingRequest;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
-use App\Services\BookingService;
+use App\Services\Shared\BookingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -36,10 +36,10 @@ class BookingController extends Controller
     public function store(StoreBookingRequest $request)
     {
         Gate::authorize('create', Booking::class);
-        try{
+        try {
             $booking = $this->bookingService->storeBooking($request->validated(), $request->user()->id);
             return $this->success(new BookingResource($booking->load(['apartment', 'user'])), __('Booking request submitted successfully'), 201);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $this->error($e->getMessage(), 400);
         }
     }
@@ -47,7 +47,7 @@ class BookingController extends Controller
     public function show(Booking $booking)
     {
         Gate::authorize('view', $booking);
-          
+
         return $this->success(new BookingResource($booking->load(['apartment', 'user'])), __('Booking details retrieved successfully'));
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\Tenant\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:api'])->group(function () {

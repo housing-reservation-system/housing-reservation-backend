@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use App\Models\DeviceToken;
+use Spatie\MediaLibrary\HasMedia;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends Authenticatable implements JWTSubject, HasMedia
 {
@@ -61,13 +62,21 @@ class User extends Authenticatable implements JWTSubject, HasMedia
     }
 
     public function getNameAttribute(): string
-{
-    return trim($this->first_name . ' ' . $this->last_name) ?: $this->email;
-}
+    {
+        return trim($this->first_name . ' ' . $this->last_name) ?: $this->email;
+    }
 
-public function bookings()
-{
-    return $this->hasMany(Booking::class);
-}
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+    public function deviceTokens()
+    {
+        return $this->hasMany(DeviceToken::class, 'user_id');
+    }
 
+    public function routeNotificationForFcm($notification)
+    {
+        return $this->deviceTokens()->pluck('token')->toArray();
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Shared;
 
 use App\Models\Apartment;
 use App\Models\Booking;
@@ -13,10 +13,10 @@ class BookingService
     public function storeBooking(array $data, int $userId)
     {
         $apartment = Apartment::findOrFail($data['apartment_id']);
-        
+
         $startDate = Carbon::parse($data['start_date']);
         $endDate = $this->calculateEndDate($startDate, $data['duration'], $apartment->rent_period);
-        
+
         if ($this->hasConflict($apartment->id, $startDate, $endDate)) {
             throw new \Exception('This apartment is already booked or has a pending request for the selected period.');
         }
@@ -53,7 +53,7 @@ class BookingService
                 'start_date' => $startDate->toDateString(),
                 'end_date' => $endDate->toDateString(),
                 'total_price' => $apartment->rent_price * $duration,
-                'status' => 'Pending', 
+                'status' => 'Pending',
                 'is_modified' => true,
                 'payment_method_id' => $data['payment_method_id'] ?? $booking->payment_method_id,
             ]);
@@ -121,11 +121,11 @@ class BookingService
     public function hasConflict(int $apartmentId, Carbon $startDate, Carbon $endDate, ?int $excludeBookingId = null): bool
     {
         return Booking::where('apartment_id', $apartmentId)
-            ->whereIn('status', ['Approved', 'Ongoing']) 
+            ->whereIn('status', ['Approved', 'Ongoing'])
             ->where(function ($query) use ($startDate, $endDate) {
                 $query->where(function ($q) use ($startDate, $endDate) {
                     $q->where('start_date', '<', $endDate)
-                      ->where('end_date', '>', $startDate);
+                        ->where('end_date', '>', $startDate);
                 });
             })
             ->when($excludeBookingId, function ($query) use ($excludeBookingId) {
