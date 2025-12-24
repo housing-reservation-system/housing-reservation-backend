@@ -9,3 +9,4 @@ include __DIR__ . '/Api/Shared/paymentMethods.php';
 include __DIR__ . '/Api/Tenant/bookings.php';
 include __DIR__ . '/Api/Host/bookings.php';
 include __DIR__ . '/Api/Shared/deviceTokens.php';
+include __DIR__ . '/Api/Tenant/favorites.php';

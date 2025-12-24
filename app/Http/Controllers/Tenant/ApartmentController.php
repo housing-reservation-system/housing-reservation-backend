@@ -5,21 +5,25 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ApartmentTenantFullResource;
 use App\Http\Resources\ApartmentTenantListResource;
+
 use App\Models\Apartment;
 use App\Services\ApartmentTenantService;
+use App\Services\FavoriteService;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApartmentController extends Controller
 {
     use ApiResponse;
     protected $service;
-
-    public function __construct(ApartmentTenantService $service)
+protected $favoriteService;
+    public function __construct(ApartmentTenantService $service ,FavoriteService $favoriteService)
     {
         $this->service = $service;
+        $this->favoriteService=$favoriteService;
     }
 
     public function index()
@@ -39,10 +43,17 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         try {
+
+            $user=Auth::user();
+            $isFavorited=false;
+            if($user){
+                $isFavorited=$this->favoriteService->isFavorited($user,$apartment);
+            }
             $apartment = $this->service->show($apartment);
-            return $this->success(
-                new ApartmentTenantFullResource($apartment),
-                'Apartment details retrieved successfully',
+            $apartment->is_favorited=$isFavorited;
+            return $this->success(['data'=>new ApartmentTenantFullResource($apartment),
+            'is_favorited'=>$isFavorited,
+            'message'=>'Apartment details retrieved successfully'],
                 Response::HTTP_OK
             );
         } catch (Exception $e) {
