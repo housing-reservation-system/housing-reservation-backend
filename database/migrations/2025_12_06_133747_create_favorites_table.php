@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('apartment_id')->constrained('apartments')->cascadeOnDelete();
+
+            $table->unique(['user_id', 'apartment_id']);
             $table->timestamps();
         });
     }
@@ -20,4 +22,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('favorites');
     }
-}; 
+};

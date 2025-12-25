@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use App\Models\Apartment;
 use App\Models\DeviceToken;
 use Spatie\MediaLibrary\HasMedia;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -78,5 +79,16 @@ class User extends Authenticatable implements JWTSubject, HasMedia
     public function routeNotificationForFcm($notification)
     {
         return $this->deviceTokens()->pluck('token')->toArray();
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Apartment::class, 'favorites')->withTimestamps();
+    }
+    public function hasFavorited(Apartment $apartment): bool
+    {
+        return $this->favorites()
+            ->where('apartment_id', $apartment->id)
+            ->exists();
     }
 }

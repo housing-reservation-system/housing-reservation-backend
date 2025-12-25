@@ -28,7 +28,7 @@ class ApartmentTenantFullResource extends JsonResource
             'rent_period' => $this->rent_period,
             'amenities' => $this->amenities ?? [],
             'is_active' => $this->is_active,
-            'is_favorited'=>$this->is_favorited ?? false,
+            'is_favorited' => $this->user->hasFavorited ?? false,
             'location' => [
                 'province' => $this->location->province,
                 'city' => $this->location->city,
@@ -44,4 +44,3 @@ class ApartmentTenantFullResource extends JsonResource
         ];
     }
 }
-
