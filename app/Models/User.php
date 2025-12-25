@@ -91,4 +91,9 @@ class User extends Authenticatable implements JWTSubject, HasMedia
             ->where('apartment_id', $apartment->id)
             ->exists();
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
