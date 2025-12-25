@@ -26,6 +26,7 @@ class ApartmentTenantFullResource extends JsonResource
             'area' => $this->area,
             'rent_price' => $this->rent_price,
             'rent_period' => $this->rent_period,
+            'style' => $this->style,
             'amenities' => $this->amenities ?? [],
             'is_active' => $this->is_active,
             'is_favorited' => $this->user->hasFavorited ?? false,

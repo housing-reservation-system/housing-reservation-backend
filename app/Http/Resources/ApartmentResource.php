@@ -5,7 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ApartmentResource extends JsonResource{
+class ApartmentResource extends JsonResource
+{
     public function toArray(Request $request): array
     {
         $mainImage = $this->getMedia('apartments')->where('custom_properties.main', true)->first();
@@ -19,6 +20,7 @@ class ApartmentResource extends JsonResource{
             'area' => $this->area,
             'rent_price' => $this->rent_price,
             'rent_period' => $this->rent_period,
+            "style" => $this->style,
             'amenities' => $this->amenities ?? [],
             'is_active' => $this->is_active,
             'host' => $this->when($this->relationLoaded('host'), [

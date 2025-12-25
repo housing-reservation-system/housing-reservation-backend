@@ -19,6 +19,7 @@ class Apartment extends Model implements HasMedia
         'area',
         'rent_price',
         'rent_period',
+        'style',
         'amenities',
         'is_active',
     ];
