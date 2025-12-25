@@ -2,8 +2,9 @@
 
 namespace App\Observers;
 
-use App\Enums\StatusType;
 use App\Models\User;
+use App\Enums\StatusType;
+use Illuminate\Support\Facades\Log;
 use App\Services\NotificationService;
 
 class UserObserver
@@ -18,25 +19,26 @@ class UserObserver
     public function updated(User $user): void
     {
         $status = $user->status;
+        Log::info('Handling status change for user ID: ' . $user->id . ' to status: ' . $status);
         $this->handleStatus($user, $status);
     }
 
-    public function created(User $user): void
-    {
-        //
-    }
+    public function created(User $user): void {}
 
     private function handleStatus(User $user, string $status): void
     {
         switch ($status) {
             case StatusType::APPROVED->value:
                 $this->handleApprovedStatus($user);
+                Log::info('Handled approved status for user ID: ' . $user->id);
                 break;
             case StatusType::REJECTED->value:
                 $this->handleRejectedStatus($user);
+                Log::info('Handled rejected status for user ID: ' . $user->id);
                 break;
             case StatusType::SUSPENDED->value:
                 $this->handleSuspendedStatus($user);
+                Log::info('Handled suspended status for user ID: ' . $user->id);
                 break;
         }
     }
