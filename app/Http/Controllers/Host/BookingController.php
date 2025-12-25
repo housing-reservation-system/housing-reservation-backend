@@ -16,7 +16,7 @@ class BookingController extends Controller
 {
     use ApiResponse, AuthorizesRequests;
     protected $bookingService;
-    
+
 
     public function __construct(BookingService $bookingService)
     {
