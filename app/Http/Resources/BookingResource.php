@@ -11,14 +11,23 @@ class BookingResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            "user" => [
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+            ],
             'apartment' => [
                 'id' => $this->apartment->id,
                 'title' => $this->apartment->title,
                 'rent_price' => $this->apartment->rent_price,
                 'rent_period' => $this->apartment->rent_period,
             ],
-            'start_date' => $this->start_date->format('Y-m-d'),
-            'end_date' => $this->end_date->format('Y-m-d'),
+            "location" => [
+                "province" => $this->apartment->location->province,
+                'city' => $this->apartment->location->city,
+                'street' => $this->apartment->location->street,
+            ],
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
             'total_price' => (float) $this->total_price,
             'status' => $this->status,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

@@ -27,4 +27,14 @@ class Booking extends Model
     {
         return $this->belongsTo(Apartment::class);
     }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
 }
