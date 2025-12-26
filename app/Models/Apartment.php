@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -9,6 +9,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Apartment extends Model implements HasMedia
 {
+    use HasTranslations;
     use InteractsWithMedia;
     protected $fillable = [
         'user_id',
