@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'phone' => '',
+            'phone' => '0787689332',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('STARRS@2025'),
             'first_name' => 'Admin',
@@ -24,8 +24,8 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'phone' => '0999654321',
-            'email' => 'host@gmail.com',
+            'phone' => '099854491',
+            'email' => 'hosst@gmail.com',
             'password' => Hash::make('STARRS@2025'),
             'first_name' => 'Anas',
             'last_name' => 'Almbark',
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'phone' => '0998888888',
+            'phone' => '00989899989',
             'email' => 'tenant@gmail.com',
             'password' => Hash::make('STARRS@2025'),
             'first_name' => 'Shimaa',

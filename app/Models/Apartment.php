@@ -11,7 +11,16 @@ class Apartment extends Model implements HasMedia
 {
     use HasTranslations;
     use InteractsWithMedia;
-    protected $fillable = [
+    public array $translatable=[
+
+        'title',
+        'description',
+        'rent_period',
+        'style',
+        'amenities',
+       
+    ];
+        protected $fillable = [
         'user_id',
         'location_id',
         'title',
