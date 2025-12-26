@@ -6,7 +6,7 @@ use App\Http\Requests\ApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Http\Resources\ApartmentResource;
 use App\Models\Apartment;
-use App\Services\ApartmentService;
+use App\Services\Host\ApartmentService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,7 +16,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ApartmentController extends Controller
 {
-    use ApiResponse,AuthorizesRequests;
+    use ApiResponse, AuthorizesRequests;
 
     protected $apartmentService;
 
@@ -46,7 +46,7 @@ class ApartmentController extends Controller
                 $request->validated(),
                 Auth::id()
             );
-            
+
             return $this->success(
                 new ApartmentResource($apartment),
                 'Apartment created successfully',
@@ -59,9 +59,9 @@ class ApartmentController extends Controller
 
     public function show(Apartment $apartment)
     {
-        try {            
+        try {
             $this->authorize('view', $apartment);
-            
+
             $apartment->load(['location' => function ($q) {
                 $q->selectRaw('*, ST_X(point) as longitude, ST_Y(point) as latitude');
             }]);
@@ -81,7 +81,7 @@ class ApartmentController extends Controller
     {
         try {
             $this->authorize('update', $apartment);
-            
+
             $updatedApartment = $this->apartmentService->updateApartment(
                 $apartment,
                 $request->validated()
@@ -102,7 +102,7 @@ class ApartmentController extends Controller
     {
         try {
             $this->authorize('delete', $apartment);
-            
+
             $this->apartmentService->deleteApartment($apartment);
 
             return $this->successMessage(

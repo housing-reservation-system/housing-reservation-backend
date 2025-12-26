@@ -18,7 +18,7 @@ class PaymentMethodRequest extends FormRequest
             'card_brand' => 'required|in:VISA,MASTERCARD',
             'last_four_digits' => 'required|string|size:4',
             'card_holder_name' => 'nullable|string|max:255',
-            'expiry_date' => 'required|date|after:today',
+            'expiry_date' => 'required|after:today',
             'is_default' => 'boolean',
         ];
     }

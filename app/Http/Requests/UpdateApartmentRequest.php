@@ -21,6 +21,7 @@ class UpdateApartmentRequest extends FormRequest
             'area' => "sometimes|numeric|min:1",
             'rent_price' => "sometimes|numeric|min:0",
             'rent_period' => "sometimes|in:daily,weekly,monthly,yearly",
+            'style' => "sometimes|in:modern,classic",
             'amenities' => "nullable|array",
             'amenities.*' => "string|max:255",
             'latitude' => "sometimes|numeric",

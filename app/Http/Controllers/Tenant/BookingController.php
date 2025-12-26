@@ -9,7 +9,7 @@ use App\Http\Requests\Booking\UpdateBookingRequest;
 use App\Http\Resources\BookingResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Booking;
-use App\Services\BookingService;
+use App\Services\Shared\BookingService;
 use App\Services\ReviewService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -21,10 +21,10 @@ class BookingController extends Controller
 {
     use ApiResponse, AuthorizesRequests;
     protected $bookingService;
- protected $reviewService;
-    public function __construct(BookingService $bookingService,ReviewService $reviewService)
+    protected $reviewService;
+    public function __construct(BookingService $bookingService, ReviewService $reviewService)
     {
-        $this->reviewService= $reviewService;
+        $this->reviewService = $reviewService;
         $this->bookingService = $bookingService;
     }
 
@@ -32,28 +32,20 @@ class BookingController extends Controller
     {
         $bookings = $request->user()->bookings()
             ->with(['apartment', 'user'])
-            ->latest()
-            ->paginate(10);
+            ->get();
 
-        return $this->success(BookingResource::collection($bookings), __('Bookings retrieved successfully'));
+        return $this->success(BookingResource::collection($bookings), 'Bookings retrieved successfully');
     }
 
     public function store(StoreBookingRequest $request)
     {
         Gate::authorize('create', Booking::class);
-        try{
+        try {
             $booking = $this->bookingService->storeBooking($request->validated(), $request->user()->id);
             return $this->success(new BookingResource($booking->load(['apartment', 'user'])), __('Booking request submitted successfully'), 201);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $this->error($e->getMessage(), 400);
         }
-    }
-
-    public function show(Booking $booking)
-    {
-        Gate::authorize('view', $booking);
-
-        return $this->success(new BookingResource($booking->load(['apartment', 'user'])), __('Booking details retrieved successfully'));
     }
 
     public function update(UpdateBookingRequest $request, Booking $booking)
@@ -67,29 +59,31 @@ class BookingController extends Controller
 
     public function cancel(Request $request, Booking $booking)
     {
-        Gate::authorize('delete', $booking);
-
-        $cancelledBooking = $this->bookingService->cancelBooking($booking, $request->reason);
-
-        return $this->success(new BookingResource($cancelledBooking->load(['apartment', 'user'])), __('Booking cancelled successfully'));
+        try {
+            Gate::authorize('delete', $booking);
+            $this->bookingService->cancelBooking($booking, $request->reason);
+        } catch (Exception $e) {
+            return $this->error($e->getMessage(), 403);
+        }
+        return $this->successMessage('Booking cancelled successfully');
     }
 
-public function rate(ReviewBookingRequest $request, Booking $booking)
-{
-    try {
-        $review = $this->reviewService->storeReview([
-            'booking_id' => $booking->id,
-            'rating' => $request->rating,
-            'feedback' => $request->feedback
-        ], $request->user()->id);
+    public function rate(ReviewBookingRequest $request, Booking $booking)
+    {
+        try {
+            $review = $this->reviewService->storeReview([
+                'booking_id' => $booking->id,
+                'rating' => $request->rating,
+                'feedback' => $request->feedback
+            ], $request->user()->id);
 
-        return $this->success(
-            new ReviewResource($review),
-            'Review submitted successfully',
-            201
-        );
-    } catch (Exception $e) {
-        return $this->error($e->getMessage(), 400);
+            return $this->success(
+                new ReviewResource($review),
+                'Review submitted successfully',
+                201
+            );
+        } catch (Exception $e) {
+            return $this->error($e->getMessage(), 400);
+        }
     }
-}
 }

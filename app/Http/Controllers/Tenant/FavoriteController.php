@@ -2,22 +2,30 @@
 
 namespace App\Http\Controllers\Tenant;
 
-use App\Http\Controllers\Controller;
-use App\Services\FavoriteService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ApartmentTenantListResource;
 
 class FavoriteController extends Controller
 {
-   use ApiResponse;
-   public function __construct(protected FavoriteService $service){
+    use ApiResponse;
+    public function toggle($apartmentId, Request $request)
+    {
+        $result = $request->user()->favorites()->toggle($apartmentId);
+        return $this->successMessage(
+            empty($result['attached'])
+                ? 'The apartment has been removed from your favorites.'
+                : 'The apartment has been added to your favorites.'
+        );
+    }
 
-   }
-public function toggle($apartmentId,Request $request){
-    $result=$this->service->toggleFavorite($request->user(),$apartmentId);
-    return $this->success($result,
-    $result['action']=='added'?'Added':'Removed'
-);
-}
-
+    public function index(Request $request)
+    {
+        $favorites = $request->user()->favorites;
+        return $this->success(
+            ApartmentTenantListResource::collection($favorites),
+            'Favorites retrieved successfully'
+        );
+    }
 }

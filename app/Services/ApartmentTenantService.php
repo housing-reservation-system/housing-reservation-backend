@@ -25,8 +25,8 @@ class ApartmentTenantService
         return $apartment->fresh();
     }
     public function filter(Request $request)
-{
-    $query = Apartment::where('is_active', true);
+    {
+        $query = Apartment::where('is_active', true);
 
 
     if ($request->filled('province')) {
@@ -68,5 +68,3 @@ $query->where('rent_period',$request->rent_period);
     return $query->with('location')->get();
 }
 }
-
-

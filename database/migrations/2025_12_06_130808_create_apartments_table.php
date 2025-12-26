@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('rent_price');
             $table->enum('rent_period', ['monthly', 'yearly']);
             $table->json('amenities');
+            $table->enum('style', ['modern', 'classic']);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

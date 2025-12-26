@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Host;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
-use App\Services\BookingService;
+use App\Services\Shared\BookingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Traits\ApiResponse;
@@ -16,7 +16,7 @@ class BookingController extends Controller
 {
     use ApiResponse, AuthorizesRequests;
     protected $bookingService;
-    
+
 
     public function __construct(BookingService $bookingService)
     {
@@ -26,8 +26,8 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         $bookings = Booking::whereHas('apartment', function ($query) use ($request) {
-                $query->where('user_id', Auth::user()->id);
-            })
+            $query->where('user_id', Auth::user()->id);
+        })
             ->with(['apartment', 'user'])
             ->latest()
             ->get();
@@ -37,7 +37,7 @@ class BookingController extends Controller
 
     public function approve(Booking $booking)
     {
-         Gate::authorize('manage', $booking);
+        Gate::authorize('manage', $booking);
 
         $approvedBooking = $this->bookingService->approveBooking($booking);
 

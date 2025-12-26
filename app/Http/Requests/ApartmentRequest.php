@@ -22,6 +22,7 @@ class ApartmentRequest extends FormRequest
             'area' => "required|numeric|min:1",
             'rent_price' => "required|numeric|min:0",
             'rent_period' => "required|in:daily,weekly,monthly,yearly",
+            'style' => "required|in:modern,classic",
             'amenities' => "nullable|array",
             'amenities.*' => "string|max:255",
             'latitude' => "required|numeric",

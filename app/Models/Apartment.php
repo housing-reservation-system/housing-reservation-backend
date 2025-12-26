@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -18,6 +19,7 @@ class Apartment extends Model implements HasMedia
         'area',
         'rent_price',
         'rent_period',
+        'style',
         'amenities',
         'is_active',
     ];
@@ -56,5 +58,10 @@ class Apartment extends Model implements HasMedia
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function favoredBy()
+    {
+        return $this->belongsToMany(User::class, 'favorites');
     }
 }
