@@ -122,6 +122,7 @@ class DashboardService
                 'guest_name' => $booking->user->first_name . ' ' . $booking->user->last_name,
                 'guest_email' => $booking->user->email,
                 'apartment_title' => $booking->apartment->title,
+                'photo' => $booking->user->getFirstMediaUrl('photo'),
                 'status' => $booking->status,
                 'booking_date' => $booking->created_at->format('M d, Y'),
                 'start_date' => Carbon::parse($booking->start_date)->format('M d, Y'),
