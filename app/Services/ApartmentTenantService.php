@@ -50,6 +50,9 @@ class ApartmentTenantService
     if ($request->filled('max_price')) {
         $query->where('rent_price', '<=', $request->max_price);
     }
+    if ($request->filled('rent_period')){
+$query->where('rent_period',$request->rent_period);
+    }
 
 
     if ($request->filled('amenities')) {
