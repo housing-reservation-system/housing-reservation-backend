@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('phone')->nullable()->unique();
-            $table->string('email')->nullable()->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('password');
             $table->date('date_of_birth')->nullable();
             $table->enum('role', ['Admin', 'Tenant', 'Host']);

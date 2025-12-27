@@ -12,10 +12,10 @@ class ApartmentSeeder extends Seeder
     public function run(): void
     {
         $host = User::where('role', 'Host')->first();
-        $locations = Location::limit(4)->get();
+        $locations = Location::limit(4)->get(); 
 
         if (!$host || $locations->count() < 4) {
-            return;
+            return; 
         }
 
         Apartment::create([
@@ -55,7 +55,7 @@ class ApartmentSeeder extends Seeder
             'area' => 120,
             'rent_price' => 1000,
             'rent_period' => 'monthly',
-            'is_active' => false,
+            'is_active' => false,   
             'amenities' => json_encode(['balcony' => true, 'pool' => false])
         ]);
     }

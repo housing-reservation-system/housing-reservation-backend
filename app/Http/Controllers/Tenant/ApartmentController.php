@@ -10,7 +10,6 @@ use App\Services\ApartmentTenantService;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApartmentController extends Controller
@@ -22,11 +21,9 @@ class ApartmentController extends Controller
         $this->service = $service;
     }
 
-    public function index(Request $request)
+    public function index()
     {
         try {
-            $local=$request->get('local','ar');
-App()->setLocale($local);
             $apartments = $this->service->index();
             return $this->success(
                 ApartmentTenantListResource::collection($apartments),
@@ -38,12 +35,11 @@ App()->setLocale($local);
         }
     }
 
-    public function show(Apartment $apartment ,Request $request)
+    public function show(Apartment $apartment)
     {
         try {
-              $local=$request->get('local','ar');
-App()->setLocale($local);
             $user = request()->user();
+
             $isFavorited = $user ? $user->hasFavorited($apartment) : false;
             $apartment = $this->service->show($apartment);
             $apartment->is_favorited = $isFavorited;
@@ -64,8 +60,6 @@ App()->setLocale($local);
     public function filter(Request $request)
     {
         try {
-             /* $local=$request->get('local','ar');
-App()->setLocale($local);*/
             $apartments = $this->service->filter($request);
             return $this->success(
                 ApartmentTenantListResource::collection($apartments),
