@@ -12,14 +12,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('location_id')->constrained('locations')->cascadeOnDelete();
-            $table->string('title');
-            $table->text('description');
+            $table->json('title');
+            $table->json('description');
             $table->integer('rooms');
             $table->double('area');
             $table->double('rent_price');
             $table->enum('rent_period', ['monthly', 'yearly']);
             $table->json('amenities');
-            $table->enum('style', ['modern', 'classic']);
+            $table->enum('style', ['modern', 'classic'])->default('modern');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

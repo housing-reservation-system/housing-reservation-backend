@@ -15,10 +15,8 @@ class Apartment extends Model implements HasMedia
 
         'title',
         'description',
-        'rent_period',
-        'style',
         'amenities',
-       
+
     ];
         protected $fillable = [
         'user_id',
