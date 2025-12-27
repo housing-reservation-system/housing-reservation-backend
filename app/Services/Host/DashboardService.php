@@ -111,7 +111,7 @@ class DashboardService
         $bookings = Booking::whereHas('apartment', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })
-            ->with(['user:id,first_name,last_name,email', 'apartment:id,title'])
+            ->with(['user', 'apartment:id,title'])
             ->latest()
             ->limit($limit)
             ->get();
