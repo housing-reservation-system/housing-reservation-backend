@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Shared;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeviceTokenRequest;
-use App\Services\DeviceTokenService;
+use App\Services\Shared\DeviceTokenService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Shared;
 
 use App\Models\DeviceToken;
 
@@ -9,7 +9,7 @@ class DeviceTokenService
     public function storeToken(int $userId, array $data): DeviceToken
     {
         return DeviceToken::updateOrCreate(
-            ['user_id' => $userId, 'device_id' => $data['device_id']],
+            ['user_id' => $userId, 'device_id' => $data['device_id'] ?? null],
             [
                 'token' => $data['token'],
                 'platform' => $data['platform'],
