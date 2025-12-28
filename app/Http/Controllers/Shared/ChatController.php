@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Shared;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\SendMessageRequest;
-use App\Services\Shared\ChatService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ChatResource;
+use App\Services\Shared\ChatService;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\SendMessageRequest;
+use App\Http\Resources\ConversationResource;
 
 class ChatController extends Controller
 {
@@ -34,33 +36,19 @@ class ChatController extends Controller
                 return $this->error('Failed to send message', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
-            return $this->success([
-                'id' => $chat->id,
-                'message' => $chat->message,
-                'created_at' => $chat->created_at,
-                'sender' => [
-                    'id' => $chat->sender->id,
-                    'name' => $chat->sender->name,
-                    'photo' => $chat->sender->getFirstMediaUrl('photo'),
-                ],
-                'receiver' => [
-                    'id' => $chat->receiver->id,
-                    'name' => $chat->receiver->name,
-                    'photo' => $chat->receiver->getFirstMediaUrl('photo'),
-                ],
-            ], 'Message sent successfully', Response::HTTP_CREATED);
+            return $this->successMessage('Message sent successfully', Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function getConversation(Request $request, int $userId)
+    public function getConversation(int $userId)
     {
         try {
             $messages = $this->chatService->getConversation(Auth::user(), $userId);
 
             return $this->success([
-                'messages' => $messages->items(),
+                'messages' => ChatResource::collection($messages),
                 'pagination' => [
                     'current_page' => $messages->currentPage(),
                     'last_page' => $messages->lastPage(),
@@ -79,7 +67,7 @@ class ChatController extends Controller
             $conversations = $this->chatService->getConversations(Auth::user());
 
             return $this->success([
-                'conversations' => $conversations,
+                'conversations' => ConversationResource::collection($conversations),
             ], 'Conversations retrieved successfully');
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
