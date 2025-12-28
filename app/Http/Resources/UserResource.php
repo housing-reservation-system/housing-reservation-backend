@@ -12,6 +12,7 @@ class UserResource extends JsonResource
         $photo = $this->getFirstMedia('photo');
         $defaultPhoto = $this->getFirstMediaUrl('photo', 'default');
         return [
+            "id" => $this->id,
             "first_name" => $this->first_name ?? null,
             "last_name" => $this->last_name ?? null,
             "role" => $this->role ?? null,

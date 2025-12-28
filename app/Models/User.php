@@ -96,4 +96,14 @@ class User extends Authenticatable implements JWTSubject, HasMedia
     {
         return $this->hasMany(Review::class);
     }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Chat::class, 'sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(Chat::class, 'receiver_id');
+    }
 }

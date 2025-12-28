@@ -11,3 +11,8 @@ include __DIR__ . '/Api/Host/bookings.php';
 include __DIR__ . '/Api/Host/dashboard.php';
 include __DIR__ . '/Api/Shared/deviceTokens.php';
 include __DIR__ . '/Api/Tenant/favorites.php';
+include __DIR__ . '/Api/Shared/chats.php';
+
+use Illuminate\Support\Facades\Broadcast;
+
+Broadcast::routes(['middleware' => ['auth:api']]);

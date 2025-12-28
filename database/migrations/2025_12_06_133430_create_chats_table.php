@@ -12,8 +12,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sender_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('receiver_id')->constrained('users')->cascadeOnDelete();
-            // TODO: check if we need apartment_id later
-            // $table->foreignId('apartment_id')->nullable()->constrained('apartments')->nullOnDelete();
             $table->text('message');
             $table->boolean('is_read')->default(false);
             $table->timestamps();
