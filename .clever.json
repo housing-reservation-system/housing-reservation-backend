@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "app_id": "app_11d8eeee-807a-48d6-bba0-14c763490c35",
+      "org_id": "user_40a91103-0bdc-412e-92bb-fc9670824b02",
+      "deploy_url": "https://github.com/housing-reservation-system/housing-reservation-backend.git",
+      "git_ssh_url": "https://github.com/housing-reservation-system/housing-reservation-backend.git",
+      "name": "housing-reservation",
+      "alias": "housing-reservation"
+    }
+  ]
+}

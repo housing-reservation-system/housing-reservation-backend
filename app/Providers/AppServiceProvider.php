@@ -14,7 +14,11 @@ class AppServiceProvider extends ServiceProvider
         $this->registerObservers();
     }
 
-    public function boot(): void {}
+    public function boot(): void {
+        if (config('app.env') !== 'local') {
+        \URL::forceScheme('https');
+         }   
+    }
 
     private function registerObservers(): void
     {
