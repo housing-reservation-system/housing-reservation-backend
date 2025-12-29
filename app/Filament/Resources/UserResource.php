@@ -24,7 +24,7 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    
+
     protected static ?string $navigationGroup = 'User Management';
 
     public static function form(Form $form): Form
@@ -59,8 +59,8 @@ class UserResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('password')
                             ->password()
-                            ->dehydrated(fn ($state) => filled($state))
-                            ->required(fn (string $context): bool => $context === 'create')
+                            ->dehydrated(fn($state) => filled($state))
+                            ->required(fn(string $context): bool => $context === 'create')
                             ->maxLength(255),
                         Forms\Components\Select::make('role')
                             ->options(\App\Enums\UserRole::class)
@@ -92,7 +92,7 @@ class UserResource extends Resource
                     ->label('Avatar')
                     ->getStateUsing(function (User $record): string {
                         try {
-                            return $record->getFirstMediaUrl('photo') ?: 
+                            return $record->getFirstMediaUrl('photo') ?:
                                 'https://ui-avatars.com/api/?name=' . urlencode($record->name) . '&color=7F9CF5&background=EBF4FF';
                         } catch (\Throwable $e) {
                             return 'https://ui-avatars.com/api/?name=' . urlencode($record->name) . '&color=7F9CF5&background=EBF4FF';
@@ -105,18 +105,28 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
                     ->copyable(),
+                Tables\Columns\TextColumn::make('email_verification_code')
+                    ->label('Verification Code')
+                    ->searchable()
+                    ->badge()
+                    ->state(fn (User $record): string => $record->email_verification_code ?? 'Verified')
+                    ->color(fn ($state): string => $state === 'Verified' ? 'success' : 'warning')
+                    ->icon(fn ($state): ?string => $state === 'Verified' ? 'heroicon-m-check-circle' : null)
+                    ->copyable(),
+
                 Tables\Columns\TextColumn::make('role')
                     ->badge()
-                    ->color(fn ($state): string => match ($state) {
+                    ->color(fn($state): string => match ($state) {
                         \App\Enums\UserRole::ADMIN, \App\Enums\UserRole::ADMIN->value => 'danger',
                         \App\Enums\UserRole::HOST, \App\Enums\UserRole::HOST->value => 'success',
                         \App\Enums\UserRole::TENANT, \App\Enums\UserRole::TENANT->value => 'info',
                         default => 'gray',
                     })
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn ($state): string => match ($state) {
+                    ->color(fn($state): string => match ($state) {
                         \App\Enums\StatusType::APPROVED, \App\Enums\StatusType::APPROVED->value => 'success',
                         \App\Enums\StatusType::PENDING, \App\Enums\StatusType::PENDING->value => 'warning',
                         \App\Enums\StatusType::REJECTED, \App\Enums\StatusType::REJECTED->value => 'danger',
@@ -156,7 +166,7 @@ class UserResource extends Resource
                                     ->label('Profile Photo')
                                     ->getStateUsing(function (User $record): string {
                                         try {
-                                            return $record->getFirstMediaUrl('photo') ?: 
+                                            return $record->getFirstMediaUrl('photo') ?:
                                                 'https://ui-avatars.com/api/?name=' . urlencode($record->name) . '&color=7F9CF5&background=EBF4FF';
                                         } catch (\Throwable $e) {
                                             return 'https://ui-avatars.com/api/?name=' . urlencode($record->name) . '&color=7F9CF5&background=EBF4FF';
@@ -169,7 +179,7 @@ class UserResource extends Resource
                                             ->icon('heroicon-m-user'),
                                         TextEntry::make('role')
                                             ->badge()
-                                            ->color(fn ($state): string => match ($state) {
+                                            ->color(fn($state): string => match ($state) {
                                                 \App\Enums\UserRole::ADMIN, \App\Enums\UserRole::ADMIN->value => 'danger',
                                                 \App\Enums\UserRole::HOST, \App\Enums\UserRole::HOST->value => 'success',
                                                 \App\Enums\UserRole::TENANT, \App\Enums\UserRole::TENANT->value => 'info',
@@ -179,7 +189,7 @@ class UserResource extends Resource
                                             ->icon('heroicon-m-envelope'),
                                         TextEntry::make('status')
                                             ->badge()
-                                            ->color(fn ($state): string => match ($state) {
+                                            ->color(fn($state): string => match ($state) {
                                                 \App\Enums\StatusType::APPROVED, \App\Enums\StatusType::APPROVED->value => 'success',
                                                 \App\Enums\StatusType::PENDING, \App\Enums\StatusType::PENDING->value => 'warning',
                                                 \App\Enums\StatusType::REJECTED, \App\Enums\StatusType::REJECTED->value => 'danger',
@@ -188,10 +198,17 @@ class UserResource extends Resource
                                             }),
                                         TextEntry::make('phone')
                                             ->placeholder('No phone number'),
+                                        TextEntry::make('email_verification_code')
+                                            ->label('Verification Code')
+                                            ->badge()
+                                            ->state(fn (User $record): string => $record->email_verification_code ?? 'Verified')
+                                            ->color(fn ($state): string => $state === 'Verified' ? 'success' : 'warning')
+                                            ->icon(fn ($state): string => $state === 'Verified' ? 'heroicon-m-check-circle' : 'heroicon-m-shield-check')
+                                            ->copyable(),
                                         IconEntry::make('email_verified_at')
                                             ->label('Email Verified')
                                             ->boolean()
-                                            ->getStateUsing(fn ($record) => filled($record->email_verified_at)),
+                                            ->getStateUsing(fn($record) => filled($record->email_verified_at)),
                                     ])->columnSpan(2),
                             ]),
                     ]),
