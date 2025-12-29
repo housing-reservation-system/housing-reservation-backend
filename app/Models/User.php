@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Panel;
 use App\Enums\UserRole;
 use App\Models\Apartment;
 use App\Models\DeviceToken;
@@ -105,5 +106,10 @@ class User extends Authenticatable implements JWTSubject, HasMedia
     public function receivedMessages()
     {
         return $this->hasMany(Chat::class, 'receiver_id');
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
     }
 }
