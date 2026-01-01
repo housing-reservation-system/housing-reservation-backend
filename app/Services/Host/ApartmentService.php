@@ -5,7 +5,6 @@ namespace App\Services\Host;
 use App\Models\Apartment;
 use App\Models\Location;
 use Illuminate\Support\Facades\DB;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class ApartmentService
 {
@@ -18,26 +17,16 @@ class ApartmentService
             ->get();
     }
 
-    public function createApartment(array $data, int $userId,string $local)
+    public function createApartment(array $data, int $userId)
     {
-        return DB::transaction(function () use ($data, $userId,$local) {
+        return DB::transaction(function () use ($data, $userId) {
             $location = Location::create([
                 'point' => DB::raw("ST_GeomFromText('POINT({$data['longitude']} {$data['latitude']})')"),
                 'province' => $data['province'],
                 'city' => $data['city'],
                 'street' => $data['street'],
             ]);
-$otherLocal=($local ==='ar')? 'en':'ar';
-$translatableFields=['title','description'];
-foreach ($translatableFields as $field){
-    if(!empty($data[$field])){
-        $originalValue=$data[$field];
-        $translatedValue=GoogleTranslate::trans($originalValue,$otherLocal,$local);
-        $data[$field]=[$local=>$originalValue,
-        $otherLocal=>$translatedValue];
-    }
 
-}
             $apartment = Apartment::create([
                 'user_id' => $userId,
                 'location_id' => $location->id,
@@ -47,7 +36,7 @@ foreach ($translatableFields as $field){
                 'area' => $data['area'],
                 'rent_price' => $data['rent_price'],
                 'rent_period' => $data['rent_period'],
-                'style'=>$data['style'],
+                'style' => $data['style'],
                 'amenities' => $data['amenities'] ?? [],
                 'is_active' => true,
             ]);

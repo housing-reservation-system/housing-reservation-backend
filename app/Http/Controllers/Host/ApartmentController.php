@@ -42,12 +42,9 @@ class ApartmentController extends Controller
     public function store(ApartmentRequest $request)
     {
         try {
-           $local=$request->header('Accept_language','ar');
-
             $apartment = $this->apartmentService->createApartment(
                 $request->validated(),
                 Auth::id(),
-                $local,
             );
 
             return $this->success(
