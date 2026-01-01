@@ -24,6 +24,8 @@ class Apartment extends Model implements HasMedia
     ];
 
     protected $casts = [
+        'title' => 'array',
+        'description' => 'array',
         'amenities' => 'array',
         'is_active' => 'boolean',
     ];

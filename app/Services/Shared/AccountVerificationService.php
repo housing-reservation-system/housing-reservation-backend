@@ -12,7 +12,7 @@ class AccountVerificationService
     public function verifyAccount(Request $request): User
     {
         $user = Auth::user();
-        if ($user->status !== StatusType::NEW->value) {
+        if ($user->status->value !== StatusType::NEW->value) {
             throw new \Exception('Your account has already been verified.', 400);
         }
 
