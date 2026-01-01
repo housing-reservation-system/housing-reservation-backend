@@ -12,8 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('location_id')->constrained('locations')->cascadeOnDelete();
-            $table->json('title');
-            $table->json('description');
+            $table->string('title');
+            $table->text('description');
             $table->integer('rooms');
             $table->double('area');
             $table->double('rent_price');

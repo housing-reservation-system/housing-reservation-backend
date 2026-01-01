@@ -22,8 +22,8 @@ class ApartmentSeeder extends Seeder
         Apartment::create([
             'user_id' => $host->id,
             'location_id' => $locations[0]->id,
-            'title' => ['en' => 'Luxury Flat - Damascus Mezzeh'],
-            'description' => ['en' => 'Brand new flat with great view.'],
+            'title' => 'Luxury Flat - Damascus Mezzeh',
+            'description' => 'Brand new flat with great view.',
             'rooms' => 2,
             'style' => 'Modern',
             'area' => 120,
@@ -35,8 +35,8 @@ class ApartmentSeeder extends Seeder
         Apartment::create([
             'user_id' => $host->id,
             'location_id' => $locations[1]->id,
-            'title' => ['en' => 'Cozy Apartment - Al-Malki'],
-            'description' => ['en' => 'Perfect for solo travelers.'],
+            'title' => 'Cozy Apartment - Al-Malki',
+            'description' => 'Perfect for solo travelers.',
             'rooms' => 2,
             'style' => 'classic',
             'area' => 120,
@@ -48,8 +48,8 @@ class ApartmentSeeder extends Seeder
         Apartment::create([
             'user_id' => $host->id,
             'location_id' => $locations[2]->id,
-            'title' => ['en' => 'Aleppo Central Stay'],
-            'description' => ['en' => 'Fully furnished and quiet.'],
+            'title' => 'Aleppo Central Stay',
+            'description' => 'Fully furnished and quiet.',
             'rooms' => 2,
             'style' => 'classic',
             'area' => 120,
@@ -61,8 +61,8 @@ class ApartmentSeeder extends Seeder
         Apartment::create([
             'user_id' => $host->id,
             'location_id' => $locations[3]->id,
-            'title' => ['en' => 'Latakia Seaside Home'],
-            'description' => ['en' => 'Enjoy the sunset view.'],
+            'title' => 'Latakia Seaside Home',
+            'description' => 'Enjoy the sunset view.',
             'rooms' => 2,
             'area' => 120,
             "style" => 'Modern',
