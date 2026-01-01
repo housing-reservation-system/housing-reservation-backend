@@ -66,12 +66,18 @@ class AuthController extends Controller
     public function verifyEmail(VerifyEmailRequest $request)
     {
         try {
-            $this->authService->verifyEmail(
+            $user = $this->authService->verifyEmail(
                 $request->email,
                 $request->code
             );
 
-            return $this->successMessage("Email verified successfully.", Response::HTTP_OK);
+            $token = $this->authService->generateTokenForUser($user);
+            $data = (new UserResource($user))->toArray($request);
+
+            return $this->success([
+                ...$data,
+                'token' => $token,
+            ], "Email verified and logged in successfully.", Response::HTTP_OK);
         } catch (\Exception $e) {
             $statusCode = $e->getCode() ?: Response::HTTP_INTERNAL_SERVER_ERROR;
             return $this->error($e->getMessage(), $statusCode);

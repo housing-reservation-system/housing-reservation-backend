@@ -57,7 +57,7 @@ class AuthService
         ];
     }
 
-    public function verifyEmail(string $email, string $code): bool
+    public function verifyEmail(string $email, string $code): User
     {
         $user = User::where('email', $email)
             ->where('email_verification_code', $code)
@@ -75,7 +75,7 @@ class AuthService
         $user->email_verification_code = null;
         $user->save();
 
-        return true;
+        return $user;
     }
 
     public function resendVerificationCode(string $email): void
@@ -119,6 +119,11 @@ class AuthService
                 Auth::logout();
             }
         }
+    }
+
+    public function generateTokenForUser(User $user): string
+    {
+        return JWTAuth::fromUser($user);
     }
 
     private function generateVerificationCode(): string
