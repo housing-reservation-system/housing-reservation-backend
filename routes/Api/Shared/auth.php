@@ -10,6 +10,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
     Route::post('/verify-email', 'verifyEmail');
     Route::post('/resend-verification-code', 'resendVerificationCode');
+    Route::post('/logout', 'logout');
 });
 
 Route::controller(PasswordResetController::class)->group(function () {
