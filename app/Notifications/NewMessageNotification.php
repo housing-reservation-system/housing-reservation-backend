@@ -11,9 +11,9 @@ use NotificationChannels\Fcm\FcmChannel;
 use NotificationChannels\Fcm\FcmMessage;
 use NotificationChannels\Fcm\Resources\Notification as FcmNotification;
 
-class NewMessageNotification extends Notification implements ShouldQueue
+class NewMessageNotification extends Notification // implements ShouldQueue
 {
-    use Queueable;
+    // use Queueable;
 
     protected $chat;
     protected $sender;

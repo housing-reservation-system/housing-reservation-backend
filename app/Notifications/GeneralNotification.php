@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
+// use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -11,9 +11,9 @@ use NotificationChannels\Fcm\FcmChannel;
 use NotificationChannels\Fcm\FcmMessage;
 use NotificationChannels\Fcm\Resources\Notification as FcmNotification;
 
-class GeneralNotification extends Notification implements ShouldBroadcast, ShouldQueue
+class GeneralNotification extends Notification implements ShouldBroadcast //, ShouldQueue
 {
-    use Queueable;
+    // use Queueable;
 
     protected $title;
     protected $body;
