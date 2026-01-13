@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Shared;
 
 use App\Models\Notification;
 use App\Notifications\GeneralNotification;
@@ -55,5 +55,25 @@ class NotificationService
     public function sendErrorNotification($user, string $title, string $message, ?array $metadata = null): ?Notification
     {
         return $this->createAndBroadcast($user, 'error', $title, $message, $metadata);
+    }
+
+    public function getAllNotifications($user)
+    {
+        return Notification::where('user_id', $user->id)->get();
+    }
+
+    public function getUnreadNotifications($user)
+    {
+        return Notification::where('user_id', $user->id)->where('is_read', false)->get();
+    }
+
+    public function markAsRead($notification)
+    {
+        $notification->update(['is_read' => true]);
+    }
+
+    public function markAllAsRead($user)
+    {
+        Notification::where('user_id', $user->id)->where('is_read', false)->update(['is_read' => true]);
     }
 }

@@ -12,6 +12,7 @@ include __DIR__ . '/Api/Host/dashboard.php';
 include __DIR__ . '/Api/Shared/deviceTokens.php';
 include __DIR__ . '/Api/Tenant/favorites.php';
 include __DIR__ . '/Api/Shared/chats.php';
+include __DIR__ . '/Api/Shared/notifications.php';
 
 use Illuminate\Support\Facades\Broadcast;
 
