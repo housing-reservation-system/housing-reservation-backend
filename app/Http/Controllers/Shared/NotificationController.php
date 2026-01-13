@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shared;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\NotificationResource;
 use App\Services\Shared\NotificationService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -22,14 +23,14 @@ class NotificationController extends Controller
     {
         $user = Auth::user();
         $notifications = $this->notificationService->getAllNotifications($user);
-        return $this->success($notifications, 'Notifications retrieved successfully');
+        return $this->success(NotificationResource::collection($notifications), 'Notifications retrieved successfully');
     }
 
     public function getUnreadNotifications()
     {
         $user = Auth::user();
         $notifications = $this->notificationService->getUnreadNotifications($user);
-        return $this->success($notifications, 'Unread notifications retrieved successfully');
+        return $this->success(NotificationResource::collection($notifications), 'Unread notifications retrieved successfully');
     }
 
     public function markAsRead(Request $request, $id)
