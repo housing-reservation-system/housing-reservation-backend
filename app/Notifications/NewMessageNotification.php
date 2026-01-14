@@ -4,16 +4,14 @@ namespace App\Notifications;
 
 use App\Models\Chat;
 use App\Models\User;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Fcm\FcmChannel;
 use NotificationChannels\Fcm\FcmMessage;
 use NotificationChannels\Fcm\Resources\Notification as FcmNotification;
 
-class NewMessageNotification extends Notification implements ShouldQueue
+class NewMessageNotification extends Notification
 {
-    use Queueable;
+
 
     protected $chat;
     protected $sender;
