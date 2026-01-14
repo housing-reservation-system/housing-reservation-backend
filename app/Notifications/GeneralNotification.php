@@ -11,8 +11,6 @@ use NotificationChannels\Fcm\Resources\Notification as FcmNotification;
 
 class GeneralNotification extends Notification implements ShouldBroadcast
 {
-
-
     protected $title;
     protected $body;
     protected $data;
@@ -48,7 +46,8 @@ class GeneralNotification extends Notification implements ShouldBroadcast
 
     public function broadcastOn(): array
     {
-        return ['user.' . $this->data['user_id'] ?? 'global'];
+        $userId = $this->data['user_id'] ?? 'global';
+        return ['user.' . $userId];
     }
 
     public function broadcastAs(): string

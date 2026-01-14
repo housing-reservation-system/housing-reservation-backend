@@ -18,6 +18,8 @@ use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\ImageEntry;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Services\Shared\NotificationService;
+use Filament\Notifications\Notification as FilamentNotification;
 
 class UserResource extends Resource
 {
@@ -143,6 +145,41 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('sendNotification')
+                    ->label('Send Notification')
+                    ->icon('heroicon-o-paper-airplane')
+                    ->color('info')
+                    ->form([
+                        Forms\Components\Select::make('type')
+                            ->options([
+                                'success' => 'Success',
+                                'info' => 'Info',
+                                'warning' => 'Warning',
+                                'error' => 'Error',
+                            ])
+                            ->required()
+                            ->default('info'),
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Textarea::make('message')
+                            ->required()
+                            ->rows(3),
+                    ])
+                    ->action(function (User $record, array $data): void {
+                        $notificationService = app(NotificationService::class);
+                        $notificationService->createAndBroadcast(
+                            $record,
+                            $data['type'],
+                            $data['title'],
+                            $data['message']
+                        );
+
+                        FilamentNotification::make()
+                            ->title('Notification sent successfully')
+                            ->success()
+                            ->send();
+                    }),
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
@@ -158,6 +195,43 @@ class UserResource extends Resource
         return $infolist
             ->schema([
                 Section::make('User Profile')
+                    ->headerActions([
+                        \Filament\Infolists\Components\Actions\Action::make('sendNotification')
+                            ->label('Send Notification')
+                            ->icon('heroicon-o-paper-airplane')
+                            ->color('info')
+                            ->form([
+                                Forms\Components\Select::make('type')
+                                    ->options([
+                                        'success' => 'Success',
+                                        'info' => 'Info',
+                                        'warning' => 'Warning',
+                                        'error' => 'Error',
+                                    ])
+                                    ->required()
+                                    ->default('info'),
+                                Forms\Components\TextInput::make('title')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\Textarea::make('message')
+                                    ->required()
+                                    ->rows(3),
+                            ])
+                            ->action(function (User $record, array $data): void {
+                                $notificationService = app(NotificationService::class);
+                                $notificationService->createAndBroadcast(
+                                    $record,
+                                    $data['type'],
+                                    $data['title'],
+                                    $data['message']
+                                );
+
+                                FilamentNotification::make()
+                                    ->title('Notification sent successfully')
+                                    ->success()
+                                    ->send();
+                            }),
+                    ])
                     ->schema([
                         Grid::make(3)
                             ->schema([
