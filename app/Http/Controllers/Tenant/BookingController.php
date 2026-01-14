@@ -94,7 +94,12 @@ class BookingController extends Controller
  app(NotificationService::class)->sendSuccessNotification(
              $request->user(),
             'Review submitted  ',
-            'thank you for reviewing  apartment ' . $booking->apartment->title . '.'
+            'thank you for reviewing   the apartment ' . $booking->apartment->title . '.'
+            );
+            app(NotificationService::class)->sendInfoNotification(
+             $booking->apartment->host->id,
+            ' New Review on your apartment  ',
+            'your apartment ' . $booking->apartment->title . 'received a ' . $request->rating . 'star review from ' . $request->user()->name . '.'
             );
             return $this->success(
                 new ReviewResource($review),

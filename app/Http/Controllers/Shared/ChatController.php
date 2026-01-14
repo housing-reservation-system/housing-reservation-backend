@@ -35,7 +35,6 @@ class ChatController extends Controller
             if (!$chat) {
                 return $this->error('Failed to send message', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
-
             return $this->success(new ChatResource($chat), 'Message sent successfully', Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
