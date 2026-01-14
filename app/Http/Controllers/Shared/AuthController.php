@@ -67,7 +67,11 @@ class AuthController extends Controller
                 ...$data,
                 'token' => $result['token'],
             ], "Login successfully", Response::HTTP_OK);
-            
+            app(NotificationService::class)->sendInfoNotification(
+$result['user'],
+            ' Login successfully',
+            'welcome back' . $result['user']->name . 'you have successfully logged in.'
+            );
         } catch (\Exception $e) {
             $statusCode = $e->getCode() ?: Response::HTTP_INTERNAL_SERVER_ERROR;
             return $this->error($e->getMessage(), $statusCode);
@@ -116,6 +120,10 @@ class AuthController extends Controller
             return $this->successMessage('Logged out successfully', Response::HTTP_OK)
                 ->withoutCookie('refresh_token')
                 ->withoutCookie('role');
+                  app(NotificationService::class)->sendInfoNotification(
+              $user,
+            ' Logout successfully',
+            'you have been successfully logged out . see you soon ');
         } catch (\Exception $e) {
             return $this->error('Logout error', Response::HTTP_INTERNAL_SERVER_ERROR);
         }

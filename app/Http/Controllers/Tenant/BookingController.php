@@ -11,6 +11,7 @@ use App\Http\Resources\ReviewResource;
 use App\Models\Booking;
 use App\Services\Shared\BookingService;
 use App\Services\ReviewService;
+use App\Services\Shared\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -43,6 +44,11 @@ class BookingController extends Controller
         try {
             $booking = $this->bookingService->storeBooking($request->validated(), $request->user()->id);
             return $this->success(new BookingResource($booking->load(['apartment', 'user'])), __('Booking request submitted successfully'), 201);
+              app(NotificationService::class)->sendSuccessNotification(
+             $request->user(),
+            'Booking request submitted  ',
+            'your booking request for apartment ' . $booking->apartment->title . 'has been submitted successfully.'
+            );
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), 400);
         }
@@ -53,7 +59,11 @@ class BookingController extends Controller
         Gate::authorize('update', $booking);
 
         $updatedBooking = $this->bookingService->updateBooking($booking, $request->validated());
-
+ app(NotificationService::class)->sendInfoNotification(
+             $request->user(),
+            'Modification request submitted  ',
+            'your modification request for booking apartment ' . $booking->apartment->title . 'has been submitted .'
+            );
         return $this->success(new BookingResource($updatedBooking->load(['apartment', 'user'])), __('Booking updated successfully. It now requires owner re-approval.'));
     }
 
@@ -62,6 +72,11 @@ class BookingController extends Controller
         try {
             Gate::authorize('delete', $booking);
             $this->bookingService->cancelBooking($booking, $request->reason);
+             app(NotificationService::class)->sendWarningNotification(
+             $request->user(),
+            'Booking cancelled  ',
+            'your booking  for apartment ' . $booking->apartment->title . 'has been cancelled successfully.'
+            );
         } catch (Exception $e) {
             return $this->error($e->getMessage(), 403);
         }
@@ -76,7 +91,11 @@ class BookingController extends Controller
                 'rating' => $request->rating,
                 'feedback' => $request->feedback
             ], $request->user()->id);
-
+ app(NotificationService::class)->sendSuccessNotification(
+             $request->user(),
+            'Review submitted  ',
+            'thank you for reviewing  apartment ' . $booking->apartment->title . '.'
+            );
             return $this->success(
                 new ReviewResource($review),
                 'Review submitted successfully',
