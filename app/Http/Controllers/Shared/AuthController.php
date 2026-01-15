@@ -13,6 +13,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\VerifyEmailRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\ResendVerificationCodeRequest;
+use App\Services\Shared\NotificationService;
 use Illuminate\Container\Attributes\Log;
 
 class AuthController extends Controller
@@ -29,7 +30,12 @@ class AuthController extends Controller
     public function registerTenant(RegisterRequest $request)
     {
         try {
-            $this->authService->register($request, UserRole::TENANT);
+           $user= $this->authService->register($request, UserRole::TENANT);
+            app(NotificationService::class)->sendSuccessNotification(
+                $user,
+                'welcome ',
+                'hello' . $user->first_name . 'thank you for joining us as a tenant.'
+            );
             return $this->successMessage("User created successfully. Please check your email for verification code.", 201);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -39,7 +45,12 @@ class AuthController extends Controller
     public function registerHost(RegisterRequest $request)
     {
         try {
-            $this->authService->register($request, UserRole::HOST);
+            $user=$this->authService->register($request, UserRole::HOST);
+             app(NotificationService::class)->sendSuccessNotification(
+                $user,
+                'welcome ',
+                'hello' . $user->first_name . 'thank you for joining us as a host.'
+            );
             return $this->successMessage("User created successfully. Please check your email for verification code.", 201);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -56,6 +67,11 @@ class AuthController extends Controller
                 ...$data,
                 'token' => $result['token'],
             ], "Login successfully", Response::HTTP_OK);
+            app(NotificationService::class)->sendInfoNotification(
+$result['user'],
+            ' Login successfully',
+            'welcome back' . $result['user']->name . 'you have successfully logged in.'
+            );
         } catch (\Exception $e) {
             $statusCode = $e->getCode() ?: Response::HTTP_INTERNAL_SERVER_ERROR;
             return $this->error($e->getMessage(), $statusCode);
@@ -104,6 +120,10 @@ class AuthController extends Controller
             return $this->successMessage('Logged out successfully', Response::HTTP_OK)
                 ->withoutCookie('refresh_token')
                 ->withoutCookie('role');
+                  app(NotificationService::class)->sendInfoNotification(
+              $user,
+            ' Logout successfully',
+            'you have been successfully logged out . see you soon ');
         } catch (\Exception $e) {
             return $this->error('Logout error', Response::HTTP_INTERNAL_SERVER_ERROR);
         }

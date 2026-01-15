@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use App\Services\Shared\BookingService;
+use App\Services\Shared\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Traits\ApiResponse;
@@ -41,6 +42,11 @@ class BookingController extends Controller
 
         $approvedBooking = $this->bookingService->approveBooking($booking);
 
+ app(NotificationService::class)->sendSuccessNotification(
+             $booking->apartment->host,
+            'Booking approved successfully ',
+            'your have approved the booking for apartment  ' . $booking->apartment->title .'from tenant' . $booking->user->name .'.'
+            );
         return $this->success(new BookingResource($approvedBooking->load(['apartment', 'user'])), __('Booking approved successfully'));
     }
 
@@ -49,7 +55,11 @@ class BookingController extends Controller
         Gate::authorize('manage', $booking);
 
         $rejectedBooking = $this->bookingService->rejectBooking($booking, $request->reason);
-
+app(NotificationService::class)->sendSuccessNotification(
+             $booking->apartment->host,
+            'Booking Rejected',
+            'your have rejected the booking  request for apartment  ' . $booking->apartment->title .'from tenant' . $booking->user->name .'.'
+            );
         return $this->successMessage(__('Booking rejected successfully'));
     }
 }

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Services\Shared\NotificationService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ApartmentController extends Controller
@@ -46,7 +47,11 @@ class ApartmentController extends Controller
                 $request->validated(),
                 Auth::id(),
             );
-
+ app(NotificationService::class)->sendSuccessNotification(
+             Auth::user(),
+            'Apartment created successfully ',
+            'your  apartment ' . $apartment->title . 'has been created successfully.'
+            );
             return $this->success(
                 new ApartmentResource($apartment),
                 'Apartment created successfully',
@@ -86,7 +91,11 @@ class ApartmentController extends Controller
                 $apartment,
                 $request->validated()
             );
-
+app(NotificationService::class)->sendSuccessNotification(
+             Auth::user(),
+            'Apartment updated successfully ',
+            'your  apartment ' . $apartment->title . 'has been updated successfully.'
+            );
             return $this->success(
                 new ApartmentResource($updatedApartment),
                 'Apartment updated successfully',
@@ -104,11 +113,16 @@ class ApartmentController extends Controller
             $this->authorize('delete', $apartment);
 
             $this->apartmentService->deleteApartment($apartment);
-
+app(NotificationService::class)->sendWarningNotification(
+             Auth::user(),
+            'Apartment deleted ',
+            'your  apartment ' . $apartment->title . 'has been deleted successfully.'
+            );
             return $this->successMessage(
                 'Apartment deleted successfully',
                 Response::HTTP_OK
             );
+
         } catch (\Exception $e) {
             $statusCode = $e->getCode() ?: Response::HTTP_INTERNAL_SERVER_ERROR;
             return $this->error($e->getMessage(), $statusCode);
@@ -131,7 +145,11 @@ class ApartmentController extends Controller
                 $request->file('main_image'),
                 $request->file('images')
             );
-
+app(NotificationService::class)->sendSuccessNotification(
+             Auth::user(),
+            'Apartment Images Updated ',
+            'Images for apartment ' . $apartment->title . 'has been  updated successfully.'
+            );
             return $this->success(
                 new ApartmentResource($updatedApartment),
                 'Apartment images updated successfully',
