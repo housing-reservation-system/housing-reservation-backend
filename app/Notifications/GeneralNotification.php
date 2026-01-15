@@ -11,6 +11,8 @@ use NotificationChannels\Fcm\FcmChannel;
 use NotificationChannels\Fcm\FcmMessage;
 use NotificationChannels\Fcm\Resources\Notification as FcmNotification;
 
+use Illuminate\Broadcasting\PrivateChannel;
+
 class GeneralNotification extends Notification implements ShouldBroadcast, ShouldQueue
 {
     use Queueable;
@@ -51,7 +53,7 @@ class GeneralNotification extends Notification implements ShouldBroadcast, Shoul
     public function broadcastOn(): array
     {
         $userId = $this->data['user_id'] ?? 'global';
-        return ['user.' . $userId];
+        return [new PrivateChannel('user.' . $userId)];
     }
 
     public function broadcastAs(): string

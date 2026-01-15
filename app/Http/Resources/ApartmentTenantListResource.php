@@ -19,6 +19,11 @@ class ApartmentTenantListResource extends JsonResource
             'rent_period' => $this->rent_period,
             'style' => $this->style,
             'main_image' => $mainImage ? $mainImage->getUrl() : null,
+            'location' => [
+                'province' => $this->location->province ?? null,
+                'city' => $this->location->city ?? null,
+                'street' => $this->location->street ?? null,
+            ],
         ];
     }
 }

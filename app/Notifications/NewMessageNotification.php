@@ -14,9 +14,7 @@ use Illuminate\Bus\Queueable;
 class NewMessageNotification extends Notification implements ShouldQueue
 {
     use Queueable;
-
-
-
+    
     protected $chat;
     protected $sender;
 
